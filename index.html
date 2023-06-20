@@ -1,291 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link  rel="icon" href="https://tailwindcss.com/_next/static/media/tailwindcss-mark.3c5441fc7a190fb1800d4a5c7f07ba4b1345a9c8.svg"> -->
-    <title>TailwindUI_assignment</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');  
-        *{
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-    </style>
-</head>
-<body>
-<div class="max-w-7xl mx-3 xl:mx-auto border-zinc-300 border rounded-lg mt-2 sm:mt-3 md:mt-5 lg:mt6 mb-12 overflow-hidden">
-    
-
-    <!-- HEADER SECTION
-    <header class="flex justify-center items-center bg-indigo-600 rounded-t-lg text-white text-sm font-medium py-2">
-        <div>
-            Get free delivery on orders over $100
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WeatherAPI</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div>
+      <h1>GET WEATHER REPORT</h1>
+      <h3>Either Write City Name OR Refresh and Click On Map To Get Specific Data</h3>
+      <input
+        type="text"
+        name=""
+        id="searchInput"
+        placeholder="enter city name"
+      />
+      <button id="searchButton">Get Report</button>
+      <div class="flexrow">
+        <div id="map"></div>
+        <div id="marginLeft">
+              <div style="margin-left: 24px;">
+                <div id="weatherContainer"></div>
+                <div id="latLon">
+                    <div id="latitude"></div>
+                    <div id="longitude"></div>
+                </div>
+              </div>
         </div>
-    </header> -->
-
-
-    <!-- NAVBAR SECTION -->
-    <nav class="flex flex-row justify-between mx-4 lg:mx-8 mt-5 mb-3 ">
-        <div class="flex flex-row justify-start text-sm font-medium  hidden lg:flex">
-            <div class="mr-7 hover:cursor-pointer">Women</div>
-            <div class="mr-7 hover:cursor-pointer">Men</div>
-            <div class="mr-7 hover:cursor-pointer">Company</div>
-            <div class=" hover:cursor-pointer">Stores</div>
-        </div>
-        <div class="flex lg:hidden">
-            <div class="mr-7 hover:cursor-pointer">
-                <svg width="26px" height="26px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#a9adab"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Menu / Hamburger_LG"> <path id="Vector" d="M3 17H21M3 12H21M3 7H21" stroke="#a9adab" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
-            </div>
-            <div class=" hover:cursor-pointer">
-                <svg width="26px" height="26px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 15L21 21" stroke="#A9ABAD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#A9ABAD" stroke-width="1.5"></path> </g></svg>
-            </div>
-        </div>
-        <div>
-            <img class="h-8 hover:cursor-pointer" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="logo">
-        </div>
-        <div class="flex flex-row items-center justify-end ">
-            <div class="flex flex-row justify-center items-center hidden lg:flex hover:cursor-pointer">
-                <span>
-                    <svg  width="28px" height="28px" viewBox="-3.6 -3.6 43.20 43.20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--twemoji" preserveAspectRatio="xMidYMid meet" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#138808" d="M0 27a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4v-4H0v4z"></path><path fill="#EEE" d="M0 13h36v10H0z"></path><path fill="#F93" d="M36 13V9a4 4 0 0 0-4-4H4a4 4 0 0 0-4 4v4h36z"></path><circle fill="navy" cx="18" cy="18" r="4"></circle><circle fill="#EEE" cx="18" cy="18" r="3"></circle><path fill="#6666B3" d="M18 15l.146 2.264l1.001-2.035l-.73 2.147l1.704-1.498l-1.497 1.705l2.147-.731l-2.035 1.002L21 18l-2.264.146l2.035 1.001l-2.147-.73l1.497 1.704l-1.704-1.497l.73 2.147l-1.001-2.035L18 21l-.146-2.264l-1.002 2.035l.731-2.147l-1.705 1.497l1.498-1.704l-2.147.73l2.035-1.001L15 18l2.264-.146l-2.035-1.002l2.147.731l-1.498-1.705l1.705 1.498l-.731-2.147l1.002 2.035z"></path><circle fill="navy" cx="18" cy="18" r="1"></circle></g></svg>
-                </span>
-                <span class="ml-3">
-                    IND
-                </span>
-            </div>
-            <div  class="ml-7  hidden lg:flex hover:cursor-pointer">
-                <svg width="26px" height="26px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 15L21 21" stroke="#A9ABAD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="#A9ABAD" stroke-width="1.5"></path> </g></svg>
-            </div>
-            <div class="ml-7 hover:cursor-pointer">
-                <svg width="26px" height="26px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#a9abad" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5ZM7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8ZM7.45609 16.7264C6.40184 17.1946 6 17.7858 6 18.5C6 18.7236 6.03976 18.8502 6.09728 18.942C6.15483 19.0338 6.29214 19.1893 6.66219 19.3567C7.45312 19.7145 9.01609 20 12 20C14.9839 20 16.5469 19.7145 17.3378 19.3567C17.7079 19.1893 17.8452 19.0338 17.9027 18.942C17.9602 18.8502 18 18.7236 18 18.5C18 17.7858 17.5982 17.1946 16.5439 16.7264C15.4614 16.2458 13.8722 16 12 16C10.1278 16 8.53857 16.2458 7.45609 16.7264ZM6.64442 14.8986C8.09544 14.2542 10.0062 14 12 14C13.9938 14 15.9046 14.2542 17.3556 14.8986C18.8348 15.5554 20 16.7142 20 18.5C20 18.9667 19.9148 19.4978 19.5973 20.0043C19.2798 20.5106 18.7921 20.8939 18.1622 21.1789C16.9531 21.7259 15.0161 22 12 22C8.98391 22 7.04688 21.7259 5.83781 21.1789C5.20786 20.8939 4.72017 20.5106 4.40272 20.0043C4.08524 19.4978 4 18.9667 4 18.5C4 16.7142 5.16516 15.5554 6.64442 14.8986Z" fill="#a9abad"></path> </g></svg>
-            </div>
-            <div class="flex justify-center items-center ml-7 hover:cursor-pointer">
-                <svg fill="#a9adab" width="22px" height="22px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="#a9adab" stroke-width="0.00032"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M31.961 29.457l-2.606-15.743c-0.233-2.041-2.093-3.701-4.148-3.701h-2.208v-2.665c0-4.067-2.901-7.376-6.968-7.376-4.066 0-7.029 3.308-7.029 7.376v2.665h-2.396c-2.054 0-3.915 1.66-4.141 3.658l-2.415 15.755c-0.093 0.83 0.070 1.485 0.482 1.947 0.389 0.434 0.954 0.656 1.679 0.656h27.299c1.029 0 1.618-0.413 1.933-0.76 0.288-0.319 0.614-0.88 0.519-1.811zM11.002 7.348c0-2.964 2.066-5.376 5.029-5.376s4.968 2.412 4.968 5.376v2.665h-9.998zM29.599 30.014l-27.266 0.014c-0.172 0-0.344-0.092-0.304-0.334l2.414-15.753c0.12-1.045 1.109-1.928 2.161-1.928h2.397v2.279c-0.596 0.346-1.002 0.984-1.002 1.723 0 1.105 0.896 2 2 2s2-0.895 2-2c0-0.738-0.404-1.375-0.998-1.722v-2.281h9.997v2.281c-0.594 0.347-0.998 0.984-0.998 1.722 0 1.105 0.895 2 2 2s2-0.895 2-2c0-0.739-0.405-1.377-1.002-1.723v-2.279h2.208c1.052 0 2.041 0.883 2.169 1.982l2.604 15.727c0.012 0.128-0.088 0.291-0.381 0.291z"></path> </g></svg>
-                <span class="ml-2 text-sm">0</span>
-            </div>
-        </div>
-    </nav>
-    <hr class="mx-4 lg:mx-8 my-4">
-
-
-
-    <!-- SHOPPING SECTION  -->
-    <div class="flex flex-col mx-4 lg:mx-8 mt-16 lg:flex-row">
-        <div class="flex flex-col lg:w-2/4 mr-0 lg:mr-8">
-            <div class="max-w-2xl mx-auto">
-                <img class="rounded-lg" src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg" alt="handbag1">
-            </div>
-            <div class="flex flex-row mt-6 mb-8 hidden sm:flex max-w-2xl mx-auto">
-                <div class="mr-4 border-2 rounded-xl border-indigo-500">
-                    <img class="rounded-xl  hover:cursor-pointer" src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg" alt="handbag1">
-                </div>
-                <div class="mr-4">
-                    <img class="rounded-xl hover:cursor-pointer" src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-02.jpg" alt="handbag2">
-                </div>
-                <div class="mr-4">
-                    <img class="rounded-xl hover:cursor-pointer" src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-03.jpg" alt="handbag3">
-                </div>
-                <div class="">
-                    <img class="rounded-xl hover:cursor-pointer" src="https://tailwindui.com/img/ecommerce-images/product-page-03-product-04.jpg" alt="handbag4">
-                </div>
-            </div>
-        </div>
-        <div class="max-w-2xl w-full lg:w-2/4 mx-auto">
-            <div class="text-3xl font-bold">
-                Zip Tote Basket 
-            </div>
-            <div class="text-3xl font-medium mt-3">
-                $159
-            </div>
-            <div class="mt-5 flex flex-row">
-                <span class="mr-1">
-                    <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#6366F1" stroke="#6366F1" stroke-width="0.00064"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#6366F1" d="M62.799,23.737c-0.47-1.399-1.681-2.419-3.139-2.642l-16.969-2.593L35.069,2.265 C34.419,0.881,33.03,0,31.504,0c-1.527,0-2.915,0.881-3.565,2.265l-7.623,16.238L3.347,21.096c-1.458,0.223-2.669,1.242-3.138,2.642 c-0.469,1.4-0.115,2.942,0.916,4l12.392,12.707l-2.935,17.977c-0.242,1.488,0.389,2.984,1.62,3.854 c1.23,0.87,2.854,0.958,4.177,0.228l15.126-8.365l15.126,8.365c0.597,0.33,1.254,0.492,1.908,0.492c0.796,0,1.592-0.242,2.269-0.72 c1.231-0.869,1.861-2.365,1.619-3.854l-2.935-17.977l12.393-12.707C62.914,26.68,63.268,25.138,62.799,23.737z"></path> </g></svg> 
-                </span>
-                <span class="mr-1">
-                    <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#6366F1" stroke="#6366F1" stroke-width="0.00064"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#6366F1" d="M62.799,23.737c-0.47-1.399-1.681-2.419-3.139-2.642l-16.969-2.593L35.069,2.265 C34.419,0.881,33.03,0,31.504,0c-1.527,0-2.915,0.881-3.565,2.265l-7.623,16.238L3.347,21.096c-1.458,0.223-2.669,1.242-3.138,2.642 c-0.469,1.4-0.115,2.942,0.916,4l12.392,12.707l-2.935,17.977c-0.242,1.488,0.389,2.984,1.62,3.854 c1.23,0.87,2.854,0.958,4.177,0.228l15.126-8.365l15.126,8.365c0.597,0.33,1.254,0.492,1.908,0.492c0.796,0,1.592-0.242,2.269-0.72 c1.231-0.869,1.861-2.365,1.619-3.854l-2.935-17.977l12.393-12.707C62.914,26.68,63.268,25.138,62.799,23.737z"></path> </g></svg> 
-                </span>
-                <span class="mr-1">
-                    <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#6366F1" stroke="#6366F1" stroke-width="0.00064"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#6366F1" d="M62.799,23.737c-0.47-1.399-1.681-2.419-3.139-2.642l-16.969-2.593L35.069,2.265 C34.419,0.881,33.03,0,31.504,0c-1.527,0-2.915,0.881-3.565,2.265l-7.623,16.238L3.347,21.096c-1.458,0.223-2.669,1.242-3.138,2.642 c-0.469,1.4-0.115,2.942,0.916,4l12.392,12.707l-2.935,17.977c-0.242,1.488,0.389,2.984,1.62,3.854 c1.23,0.87,2.854,0.958,4.177,0.228l15.126-8.365l15.126,8.365c0.597,0.33,1.254,0.492,1.908,0.492c0.796,0,1.592-0.242,2.269-0.72 c1.231-0.869,1.861-2.365,1.619-3.854l-2.935-17.977l12.393-12.707C62.914,26.68,63.268,25.138,62.799,23.737z"></path> </g></svg> 
-                </span>
-                <span class="mr-1">
-                    <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#6366F1" stroke="#6366F1" stroke-width="0.00064"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#6366F1" d="M62.799,23.737c-0.47-1.399-1.681-2.419-3.139-2.642l-16.969-2.593L35.069,2.265 C34.419,0.881,33.03,0,31.504,0c-1.527,0-2.915,0.881-3.565,2.265l-7.623,16.238L3.347,21.096c-1.458,0.223-2.669,1.242-3.138,2.642 c-0.469,1.4-0.115,2.942,0.916,4l12.392,12.707l-2.935,17.977c-0.242,1.488,0.389,2.984,1.62,3.854 c1.23,0.87,2.854,0.958,4.177,0.228l15.126-8.365l15.126,8.365c0.597,0.33,1.254,0.492,1.908,0.492c0.796,0,1.592-0.242,2.269-0.72 c1.231-0.869,1.861-2.365,1.619-3.854l-2.935-17.977l12.393-12.707C62.914,26.68,63.268,25.138,62.799,23.737z"></path> </g></svg> 
-                </span>
-                <span>
-                    <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve" fill="#D1D5DB" stroke="#D1D5DB" stroke-width="0.00064"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#D1D5DB" d="M62.799,23.737c-0.47-1.399-1.681-2.419-3.139-2.642l-16.969-2.593L35.069,2.265 C34.419,0.881,33.03,0,31.504,0c-1.527,0-2.915,0.881-3.565,2.265l-7.623,16.238L3.347,21.096c-1.458,0.223-2.669,1.242-3.138,2.642 c-0.469,1.4-0.115,2.942,0.916,4l12.392,12.707l-2.935,17.977c-0.242,1.488,0.389,2.984,1.62,3.854 c1.23,0.87,2.854,0.958,4.177,0.228l15.126-8.365l15.126,8.365c0.597,0.33,1.254,0.492,1.908,0.492c0.796,0,1.592-0.242,2.269-0.72 c1.231-0.869,1.861-2.365,1.619-3.854l-2.935-17.977l12.393-12.707C62.914,26.68,63.268,25.138,62.799,23.737z"></path> </g></svg>
-                </span>
-            </div>
-            <div class="mt-8 font-light text-base flex-wrap">
-                The Zip Tote Basket is the perfect midpoint between shopping tote and comfy backpack. With convertible straps, you can hand carry, should sling, or backpack this convenient and spacious bag. The zip top and durable canvas construction keeps your goods protected for all-day use.
-            </div>
-            <div class="mt-6">
-                <div class="font-normal text-sm">Color</div>
-                <div class="flex flex-row items-center mt-2">
-                    <span class="mr-3 border-double border-8 rounded-full border-slate-800  hover:cursor-pointer">
-                        <svg fill="#1E293B" width="28px" height="28px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" stroke="#374151" stroke-width="0.00032"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="16" cy="16" r="16"></circle> </g></svg>
-                    </span>
-                    <span class="border-zinc-300 border-2 rounded-full mr-3 hover:cursor-pointer">
-                        <svg fill="#ffffff" width="31px" height="31px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="16" cy="16" r="16"></circle> </g></svg>
-                    </span>
-                    <span class=" hover:cursor-pointer">
-                        <svg fill="#6B7280" width="31px" height="31px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" stroke="#6B7280" stroke-width="0.00032"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <circle cx="16" cy="16" r="16"></circle> </g></svg>
-                    </span>
-                </div>
-            </div>
-            <div class="mt-8 mb-12 flex flex-row items-center">
-                <button class="bg-indigo-600 text-white rounded-md py-3 w-72 hover:bg-indigo-700">Add to bag</button>
-                <span class="ml-6 hover:cursor-pointer hover:bg-gray-100 p-3 rounded-lg">
-                    <svg width="26px" height="26px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Interface / Heart_01"> <path id="Vector" d="M12 7.69431C10 2.99988 3 3.49988 3 9.49991C3 15.4999 12 20.5001 12 20.5001C12 20.5001 21 15.4999 21 9.49991C21 3.49988 14 2.99988 12 7.69431Z" stroke="#9CA3AF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
-                </span>
-            </div>
-            <hr class="my-6">
-            <div class="flex flex-row justify-between hover:cursor-pointer text-sm">
-                <div>Features</div>
-                <div>
-                    <svg width="23px" height="23px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#9CA3AF" stroke-width="0.0002"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#9CA3AF" fill-rule="evenodd" d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"></path> </g></svg>
-                </div>
-            </div>    
-            <hr class="my-6">
-            <div class="flex flex-row justify-between hover:cursor-pointer text-sm">
-                <div>Care</div>
-                <div>
-                    <svg width="23px" height="23px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#9CA3AF" stroke-width="0.0002"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#9CA3AF" fill-rule="evenodd" d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"></path> </g></svg>
-                </div>
-            </div>  
-            <hr class="my-6">
-            <div class="flex flex-row justify-between hover:cursor-pointer text-sm">
-                <div>Shipping</div>
-                <div>
-                    <svg width="23px" height="23px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#9CA3AF" stroke-width="0.0002"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#9CA3AF" fill-rule="evenodd" d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"></path> </g></svg>
-                </div>
-            </div>  
-            <hr class="my-6">
-            <div class="flex flex-row justify-between hover:cursor-pointer text-sm">
-                <div>Returns</div>
-                <div>
-                    <svg width="23px" height="23px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#9CA3AF" stroke-width="0.0002"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="#9CA3AF" fill-rule="evenodd" d="M9 17a1 1 0 102 0v-6h6a1 1 0 100-2h-6V3a1 1 0 10-2 0v6H3a1 1 0 000 2h6v6z"></path> </g></svg>
-                </div>
-            </div>                 
-        </div>
+      </div> 
+      
     </div>
-    <hr class="mx-0 md:mx-8 my-8">
-    
-
-    <!-- SHOPPING SECTIONS IN LIST STYLE AS SUGGESTION -->
-    <div class="mx-4 lg:mx-8 md:mx-auto max-w-2xl">
-        <div class="font-semibold text-xl">Customers also bought</div>
-    </div>
-    <div class="flex flex-col mx-4 max-w-2xl md:mx-auto lg:mx-8 md:grid md:grid-cols-2 md:gap-6 lg:flex-row lg:grid-cols-4 lg:max-w-7xl    ">
-        <div class="">
-            <div class="relative">
-                <div class="h-80 flex justify-center items-center overflow-hidden mt-8">    
-                    <img class="object-center object-fit" src="https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-01.jpg" alt="product1">
-                </div>
-                <div class="absolute h-2/4 bottom-0 w-full bg-gradient-to-t from-black to-transparent z-10 opacity-50 rounded-lg"></div>
-                <div class="absolute bottom-3 right-5 text-lg font-semibold text-white z-20">$199</div>
-            </div>
-            <div class="text-sm font-medium mt-2">Zip Tote Basket</div>
-            <div class="text-sm opacity-60 mt-1 font-medium">White ans black</div>
-            <button class="w-full bg-gray-100 py-2 text-sm my-6  hover:cursor-pointe hover:bg-gray-200 rounded-mdr">Add to bag</button>
-        </div>
-        
-        <div class="">
-            <div class="relative">
-                <div class="h-80 flex justify-center items-center overflow-hidden mt-8">    
-                    <img class="object-center object-fit" src="https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-02.jpg" alt="product1">
-                </div>
-                <div class="absolute h-2/4 bottom-0 w-full bg-gradient-to-t from-black to-transparent z-10 opacity-50 rounded-lg"></div>
-                <div class="absolute bottom-3 right-5 text-lg font-semibold text-white z-20">$329</div>
-            </div>
-            <div class="text-sm font-medium mt-2">Zip High Wall Tote</div>
-            <div class="text-sm opacity-60 mt-1 font-medium">White ans blue</div>
-            <button class="w-full bg-gray-100 py-2 text-sm my-6 hover:cursor-pointer hover:bg-gray-200 rounded-md">Add to bag</button>
-        </div>
-        <div class="">
-            <div class="relative">
-                <div class="h-80 flex justify-center items-center overflow-hidden mt-8">    
-                    <img class="object-center object-fit" src="https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-03.jpg" alt="product1">
-                </div>
-                <div class="absolute h-2/4 bottom-0 w-full bg-gradient-to-t from-black to-transparent z-10 opacity-50 rounded-lg"></div>
-                <div class="absolute bottom-3 right-5 text-lg font-semibold text-white z-20">$169</div>
-            </div>
-            <div class="text-sm font-medium mt-2">Halfsize Tote</div>
-            <div class="text-sm opacity-60 mt-1 font-medium">Clay</div>
-            <button class="w-full bg-gray-100 py-2 text-sm my-6 hover:cursor-pointer hover:bg-gray-200 rounded-md">Add to bag</button>
-        </div>
-        <div class="">
-            <div class="relative">
-                <div class="h-80 flex justify-center items-center overflow-hidden mt-8">    
-                    <img class="object-center object-fit" src="https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-04.jpg" alt="product1">
-                </div>
-                <div class="absolute h-2/4 bottom-0 w-full bg-gradient-to-t from-black to-transparent z-10 opacity-50 rounded-lg"></div>
-                <div class="absolute bottom-3 right-5 text-lg font-semibold text-white z-20">$259</div>
-            </div>
-            <div class="text-sm font-medium mt-2">High Wall Tote</div>
-            <div class="text-sm opacity-60 mt-1 font-medium">Black and orange</div>
-            <button class="w-full bg-gray-100 py-2 text-sm my-6 hover:cursor-pointer hover:bg-gray-200 rounded-md">Add to bag</button>
-        </div>
-
-    </div>
-    <hr class="mx-4 md:mx-8 my-4">
-
-
-    <!-- PRODUCTS, ABOUT, SECTION AND CUSTOMER SERVICES SECTION  -->
-    <div class="mx-4 lg:mx-8 md:mx-auto md:max-w-2xl text-sm mt-8 lg:flex lg:justify-between lg:max-w-7xl">
-        <div class="mt-8 mx-4">
-            <img class="h-8 hover:cursor-pointer" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="logo">
-        </div>
-        <div class="grid grid-cols-2 md:flex justify-between mt-8 lg:mr-20">
-            <div class="lg:mr-14">
-                <ul>
-                    <li class="font-medium">Products</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Bags</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Tees</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Objects</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Home Goods</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Accessories</li>
-                </ul>
-            </div>
-            <div class="lg:mr-14" >
-                <ul>
-                    <li class="font-medium">Company</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Who we are</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Sustainability</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Press</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Careers</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Terms & Conditions</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Privacy</li>
-                </ul>
-            </div>
-            <div class="md:mr-16 ">
-                <ul>
-                    <li class="font-medium">Customer Service</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Contact</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Shipping</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Returns</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Warranty</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Secure Payments</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">FAQ</li>
-                    <li class="mt-5 opacity-60 hover:cursor-pointer">Find a store</li>
-                </ul>
-            </div>
-        </div>
-        <div class="mt-10">
-            <div class="font-medium">Sign up for our newsletter</div>
-            <div class="mt-5 opacity-60" class="mt-5 opacity-60">The latest dealings and savings, sent to you inbox weekly</div>
-            <div class="flex  mt-2 overflow-contain">
-                <input class="border mr-5 rounded-md flex-grow  min-w-0" type="email" name="email" id="email">
-                <button class="bg-indigo-600 text-white rounded-md py-3 px-4 hover:bg-indigo-700">Sign up</button>
-            </div>
-        </div>
-    </div>
-
-    <hr class="mx-4 md:mx-8 my-4">
-
-    <div class="flex justify-center text-center text-sm opacity-60 my-12">&#169 2023 SAHA Industries & Co. Inc. All rights reserved.</div>
-
-</div>
-</body>
-</html>
+  </body>
+</html
